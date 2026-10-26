@@ -13,7 +13,8 @@
 
 #define FURL_OPS(X) \
 	X(MOV) \
-	X(ADD)
+	X(MOVR) \
+	X(ADD) \
 
 namespace Furl {
   typedef struct Inst {
@@ -82,6 +83,9 @@ namespace Furl {
                 if (inst.dest < REGS) ctx_.regs[inst.dest] = inst.imm;
                 break;
 
+              case Opcode::MOVR:
+                if (inst.dest < REGS && inst.src < REGS) ctx_.regs[inst.dest] = ctx_.regs[inst.src];
+                
               case Opcode::ADD:
                 if (inst.dest < REGS && inst.src < REGS) ctx_.regs[inst.dest] += ctx_.regs[inst.src];
                 break;
@@ -102,5 +106,8 @@ namespace Furl {
 #define X(name) \
     inline constexpr u8 OP_##name = static_cast<u8>(Furl::Opcode::name);
 
+inline constexpr u8 OP_NOP = static_cast<u8>(Furl::Opcode::NOP);
 FURL_OPS(X)
+inline constexpr u8 OP_HALT = static_cast<u8>(Furl::Opcode::HALT);
+
 #undef X

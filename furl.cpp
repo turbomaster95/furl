@@ -10,8 +10,8 @@ int main() {
   Furl::VM vm(mem);
 
   Furl::Inst program[] = {
-    { .opcode = static_cast<u8>(Furl::Opcode::MOV), .dest = 0, .src = 0, .reserved = 0, .imm = 42 },
-    { .opcode = static_cast<u8>(Furl::Opcode::HALT) }
+    { .opcode = OP_MOV, .dest = 0, .src = 0, .reserved = 0, .imm = 42 },
+    { .opcode = OP_HALT }
   };
 
   vm.run(program, sizeof(program) / sizeof(program[0]));
